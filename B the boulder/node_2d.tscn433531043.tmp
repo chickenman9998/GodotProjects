@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdckahlerngrh"]
+
+[ext_resource type="Script" uid="uid://b4dmovxteb8au" path="res://rigid_body_2d.gd" id="1_0e48y"]
+[ext_resource type="Texture2D" uid="uid://dnchycapadqtw" path="res://icon.svg" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://dpoxcuydaky1c" path="res://sprites/boulder1.png" id="2_epypp"]
+[ext_resource type="Script" uid="uid://do1veyyfhtmw" path="res://ray_cast_2d.gd" id="3_0hol4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtcfe"]
+size = Vector2(1161, 69)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(128, 128)
+
+[node name="test world" type="Node2D"]
+
+[node name="boulder-character" type="Node2D" parent="."]
+position = Vector2(731, 501)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="boulder-character"]
+input_pickable = true
+mass = 5.0
+gravity_scale = 2.0
+can_sleep = false
+script = ExtResource("1_0e48y")
+torque_force = 50
+jump_impulse = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="boulder-character/RigidBody2D"]
+texture_filter = 1
+position = Vector2(-3, -1)
+scale = Vector2(2.625, 2.390625)
+texture = ExtResource("2_epypp")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="boulder-character/RigidBody2D"]
+position = Vector2(-3, -1)
+scale = Vector2(2.625, 2.390625)
+polygon = PackedVector2Array(-5.1000004, -31.1, -5.1000004, -30.1, -10.1, -30.1, -10.1, -29.1, -12.1, -29.1, -12.1, -28.1, -13.1, -28.1, -13.1, -27.1, -14.1, -27.1, -14.1, -26.1, -15.1, -26.1, -15.1, -24.1, -16.1, -24.1, -16.1, -23.1, -17.1, -23.1, -17.1, -22.1, -18.1, -22.1, -18.1, -21.1, -19.1, -21.1, -19.1, -19.1, -20.1, -19.1, -20.1, -18.1, -21.1, -18.1, -21.1, -16.1, -22.1, -16.1, -22.1, -15.1, -23.1, -15.1, -23.1, -13.1, -24.1, -13.1, -24.1, -12.1, -25.1, -12.1, -25.1, -11.1, -26.1, -11.1, -26.1, -9.1, -27.1, -9.1, -27.1, -5.1000004, -28.1, -5.1000004, -28.1, 6.0999985, -27.1, 6.0999985, -27.1, 11.099998, -26.1, 11.099998, -26.1, 15.099998, -25.1, 15.099998, -25.1, 16.099998, -24.1, 16.099998, -24.1, 18.099998, -23.1, 18.099998, -23.1, 19.099998, -22.1, 19.099998, -22.1, 21.099998, -21.1, 21.099998, -21.1, 22.099998, -20.1, 22.099998, -20.1, 24.099998, -19.1, 24.099998, -19.1, 25.099998, -18.1, 25.099998, -18.1, 27.099998, -17.1, 27.099998, -17.1, 28.099998, -14.1, 28.099998, -14.1, 29.099998, -12.1, 29.099998, -12.1, 30.099998, -9.1, 30.099998, -9.1, 31.099998, 6.0999985, 31.099998, 6.0999985, 30.099998, 8.099998, 30.099998, 8.099998, 29.099998, 11.099998, 29.099998, 11.099998, 28.099998, 16.099998, 28.099998, 16.099998, 27.099998, 17.099998, 27.099998, 17.099998, 26.099998, 18.099998, 26.099998, 18.099998, 25.099998, 22.099998, 25.099998, 22.099998, 24.099998, 24.099998, 24.099998, 24.099998, 23.099998, 25.099998, 23.099998, 25.099998, 22.099998, 26.099998, 22.099998, 26.099998, 21.099998, 27.099998, 21.099998, 27.099998, 19.099998, 28.099998, 19.099998, 28.099998, 17.099998, 29.099998, 17.099998, 29.099998, 7.0999985, 30.099998, 7.0999985, 30.099998, -5.1000004, 29.099998, -5.1000004, 29.099998, -11.1, 28.099998, -11.1, 28.099998, -13.1, 27.099998, -13.1, 27.099998, -15.1, 26.099998, -15.1, 26.099998, -16.1, 25.099998, -16.1, 25.099998, -17.1, 24.099998, -17.1, 24.099998, -18.1, 23.099998, -18.1, 23.099998, -19.1, 22.099998, -19.1, 22.099998, -21.1, 21.099998, -21.1, 21.099998, -22.1, 20.099998, -22.1, 20.099998, -23.1, 19.099998, -23.1, 19.099998, -24.1, 18.099998, -24.1, 18.099998, -25.1, 17.099998, -25.1, 17.099998, -26.1, 16.099998, -26.1, 16.099998, -27.1, 14.099998, -27.1, 14.099998, -28.1, 11.099998, -28.1, 11.099998, -29.1, 9.099998, -29.1, 9.099998, -30.1, -0.8999996, -30.1, -0.8999996, -31.1)
+
+[node name="RayCast2D" type="RayCast2D" parent="boulder-character"]
+auto_translate_mode = 1
+show_behind_parent = true
+target_position = Vector2(0, 80)
+script = ExtResource("3_0hol4")
+parent_body_path = NodePath("../RigidBody2D")
+vertical_offset = null
+
+[node name="Line2D" type="Line2D" parent="boulder-character/RayCast2D"]
+points = PackedVector2Array(0, 0, 0, 80)
+width = 2.0
+
+[node name="floor" type="Node2D" parent="."]
+position = Vector2(15, 611)
+
+[node name="Sprite2D" type="Sprite2D" parent="floor"]
+position = Vector2(547.00006, 41)
+scale = Vector2(11.695, 0.955)
+texture = ExtResource("1_wtcfe")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="floor"]
+position = Vector2(3, 11)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor/StaticBody2D"]
+position = Vector2(557, 3)
+shape = SubResource("RectangleShape2D_wtcfe")
+
+[node name="boulder2" type="Node2D" parent="."]
+position = Vector2(491, 380)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="boulder2"]
+gravity_scale = 2.767
+can_sleep = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boulder2/RigidBody2D"]
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="boulder2/RigidBody2D"]
+texture = ExtResource("1_wtcfe")
