@@ -1,10 +1,12 @@
 extends RigidBody2D
 
-@export var lifetime := 100.0       # seconds before gib disappears
-@export var spawn_impulse := 200.0
-@export var torque_impulse := 100.0  # optional spin
+@export var lifetime := 15      # seconds before gib disappears
+@export var spawn_impulse := 400 ## to give characters an explosion effect add mask layer 6 to boulder (will add explosi
+## insanely high impulse, but being crushed by boulder, therefore gibs wont go too far. compare to T kill function
+@export var torque_impulse := 200  # optional spin
 
 @onready var particles: CPUParticles2D = $CPUParticles2D  # child node, exact name
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D  # fade this instead of scaling
 
 func _ready():
 	# Random rotation
@@ -30,6 +32,21 @@ func _ready():
 	# Apply a little spin
 	apply_torque_impulse(randf_range(-torque_impulse, torque_impulse))
 
-	# Lifetime cleanup for the gib only
+	# Start fade-out after lifetime
+	fade_after_lifetime()
+
+
+func fade_after_lifetime() -> void:
+	# Wait the full lifetime first
 	await get_tree().create_timer(lifetime).timeout
+	if linear_velocity.length() < 5 and abs(angular_velocity) < 1: sleeping = true
+
+	# Fade out in 50 steps
+	for i in 100:
+		var c := sprite.modulate
+		c.a -= 0.01  # reduce opacity
+		sprite.modulate = c
+
+		await get_tree().create_timer(0.05).timeout  # delay between steps
+
 	queue_free()

@@ -1,13 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdckahlerngrh"]
+[gd_scene load_steps=7 format=3 uid="uid://bdckahlerngrh"]
 
-[ext_resource type="Script" uid="uid://b4dmovxteb8au" path="res://rigid_body_2d.gd" id="1_0e48y"]
+[ext_resource type="PackedScene" uid="uid://3dbbewjssa8g" path="res://player.tscn" id="1_epypp"]
 [ext_resource type="Texture2D" uid="uid://dnchycapadqtw" path="res://icon.svg" id="1_wtcfe"]
-[ext_resource type="Texture2D" uid="uid://wj2psam7rtfe" path="res://sprites/gearpixel.png" id="2_0hol4"]
-[ext_resource type="Script" uid="uid://do1veyyfhtmw" path="res://ray_cast_2d.gd" id="3_0hol4"]
 [ext_resource type="PackedScene" uid="uid://cuc53kaeon0is" path="res://npc.tscn" id="5_kdubu"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_q6r6c"]
-radius = 47.169907
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wtcfe"]
 size = Vector2(2603.5, 123.5)
@@ -18,48 +13,10 @@ size = Vector2(128, 128)
 [sub_resource type="CanvasTexture" id="CanvasTexture_d21ai"]
 specular_color = Color(0.6830294, 0.9213473, 0.9999998, 1)
 
-[node name="test world" type="Node2D"]
+[node name="test_world" type="Node2D"]
 
-[node name="boulder-character" type="Node2D" parent="."]
-position = Vector2(576, 100)
-
-[node name="RigidBody2D" type="RigidBody2D" parent="boulder-character"]
-z_index = 4
-collision_layer = 7
-input_pickable = true
-mass = 10.0
-gravity_scale = 2.0
-can_sleep = false
-script = ExtResource("1_0e48y")
-torque_force = 25
-jump_impulse = 7
-
-[node name="Sprite2D" type="Sprite2D" parent="boulder-character/RigidBody2D"]
-texture_filter = 1
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_0hol4")
-
-[node name="GroundRay" type="RayCast2D" parent="boulder-character/RigidBody2D"]
-visible = false
-target_position = Vector2(0, 60)
-hit_from_inside = true
-script = ExtResource("3_0hol4")
-
-[node name="Line2D" type="Line2D" parent="boulder-character/RigidBody2D/GroundRay"]
-visible = false
-points = PackedVector2Array(0, 0, 0, 60)
-width = 4.0
-
-[node name="Camera2D" type="Camera2D" parent="boulder-character/RigidBody2D"]
-physics_interpolation_mode = 2
-zoom = Vector2(2, 2)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
-drag_horizontal_offset = 1.0
-drag_vertical_offset = -0.5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="boulder-character/RigidBody2D"]
-shape = SubResource("CircleShape2D_q6r6c")
+[node name="boulder-character" parent="." instance=ExtResource("1_epypp")]
+position = Vector2(576, 505)
 
 [node name="floor" type="Node2D" parent="."]
 position = Vector2(15, 611)
@@ -77,18 +34,19 @@ position = Vector2(3, 11)
 position = Vector2(496, 30)
 shape = SubResource("RectangleShape2D_wtcfe")
 
-[node name="object" type="Node2D" parent="."]
-position = Vector2(491, 380)
+[node name="box" type="Node2D" parent="."]
+position = Vector2(773, 0)
 
-[node name="RigidBody2D" type="RigidBody2D" parent="object"]
+[node name="RigidBody2D" type="RigidBody2D" parent="box" groups=["Hazard"]]
+collision_layer = 25
 mass = 50.0
 gravity_scale = 2.767
 can_sleep = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="object/RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="box/RigidBody2D" groups=["Hazard"]]
 shape = SubResource("RectangleShape2D_0e48y")
 
-[node name="Sprite2D" type="Sprite2D" parent="object/RigidBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="box/RigidBody2D"]
 texture = ExtResource("1_wtcfe")
 
 [node name="Background white" type="Sprite2D" parent="."]
@@ -98,10 +56,10 @@ scale = Vector2(15000, 15000)
 texture = SubResource("CanvasTexture_d21ai")
 
 [node name="npc" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(812, -1)
+position = Vector2(799, 551)
 
 [node name="npc2" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(992, -2)
+position = Vector2(364, 551)
 
 [node name="npc3" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(1187, -3)
+position = Vector2(220, 551)

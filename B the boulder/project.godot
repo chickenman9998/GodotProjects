@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Global="*res://global.gd"
 
+[global_group]
+
+Hazard=""
+
 [input]
 
 move_right={
@@ -44,9 +48,13 @@ test={
 
 [layer_names]
 
-2d_physics/layer_1="floor"
+2d_physics/layer_1="platform"
 2d_physics/layer_2="boulder"
 2d_physics/layer_3="npc"
+2d_physics/layer_4="Hazards"
+2d_physics/layer_5="objects"
+2d_physics/layer_6="gore"
+2d_physics/layer_7="explosion"
 
 [rendering]
 

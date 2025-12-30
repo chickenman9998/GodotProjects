@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cuc53kaeon0is"]
+[gd_scene load_steps=31 format=3 uid="uid://cuc53kaeon0is"]
 
 [ext_resource type="Script" uid="uid://ns4uhqilrbiu" path="res://villagerbehavior.gd" id="1_xxcha"]
 [ext_resource type="Texture2D" uid="uid://bubgdaiskv1do" path="res://sprites/spritesheet.png" id="2_kh24r"]
@@ -187,12 +187,16 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6r6c"]
-radius = 19.999998
-height = 100.0
+radius = 9.999998
+height = 109.999985
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xxcha"]
+radius = 3.0
+height = 22.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 27
 script = ExtResource("1_xxcha")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -208,3 +212,15 @@ shape = SubResource("CapsuleShape2D_q6r6c")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 20)
+
+[node name="HazardDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
+modulate = Color(0.33462557, 0.62527233, 1, 1)
+position = Vector2(1, 5)
+shape = SubResource("CapsuleShape2D_xxcha")
+
+[connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]

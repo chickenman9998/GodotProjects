@@ -1,0 +1,8 @@
+res://node_2d.tscn
+res://global.gd
+res://player.tscn
+res://rigid_body_2d.gd
+res://villagerbehavior.gd
+res://npc.tscn
+res://gibs.tscn
+res://gibs.gd

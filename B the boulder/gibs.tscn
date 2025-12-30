@@ -111,7 +111,10 @@ metadata/_snap_enabled = true
 texture_filter = 3
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 32
+collision_mask = 91
 mass = 0.5
+gravity_scale = 0.8
 script = ExtResource("1_2k3tp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
@@ -128,13 +131,13 @@ frame_progress = 0.3573497
 [node name="CPUParticles2D" type="CPUParticles2D" parent="RigidBody2D"]
 rotation = 1.5707964
 emitting = false
-amount = 50
+amount = 150
 texture = SubResource("CanvasTexture_2k3tp")
-lifetime = 15.0
+lifetime = 20.0
 one_shot = true
 speed_scale = 0.7
 explosiveness = 0.8
-randomness = 1.0
+randomness = 0.5
 lifetime_randomness = 0.5
 fract_delta = false
 emission_shape = 2

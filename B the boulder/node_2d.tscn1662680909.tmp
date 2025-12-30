@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdckahlerngrh"]
+
+[ext_resource type="PackedScene" uid="uid://3dbbewjssa8g" path="res://player.tscn" id="1_epypp"]
+[ext_resource type="Texture2D" uid="uid://dnchycapadqtw" path="res://icon.svg" id="1_wtcfe"]
+[ext_resource type="PackedScene" uid="uid://cuc53kaeon0is" path="res://npc.tscn" id="5_kdubu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtcfe"]
+size = Vector2(2603.5, 123.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(128, 128)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_d21ai"]
+specular_color = Color(0.6830294, 0.9213473, 0.9999998, 1)
+
+[node name="test world" type="Node2D"]
+
+[node name="boulder-character" parent="." instance=ExtResource("1_epypp")]
+position = Vector2(576, 100)
+
+[node name="floor" type="Node2D" parent="."]
+position = Vector2(15, 611)
+
+[node name="Sprite2D" type="Sprite2D" parent="floor"]
+z_index = 10
+position = Vector2(547.00006, 41)
+scale = Vector2(19.585, 0.955)
+texture = ExtResource("1_wtcfe")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="floor"]
+position = Vector2(3, 11)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor/StaticBody2D"]
+position = Vector2(496, 30)
+shape = SubResource("RectangleShape2D_wtcfe")
+
+[node name="object" type="Node2D" parent="."]
+position = Vector2(491, 380)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="object"]
+mass = 50.0
+gravity_scale = 2.767
+can_sleep = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="object/RigidBody2D"]
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="object/RigidBody2D"]
+texture = ExtResource("1_wtcfe")
+
+[node name="Background white" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(624, 348)
+scale = Vector2(15000, 15000)
+texture = SubResource("CanvasTexture_d21ai")
+
+[node name="npc" parent="." instance=ExtResource("5_kdubu")]
+position = Vector2(812, -1)
+walk_speed = null
+walk_time = null
+idle_time = null
+gravity = null
+wobble_rotation = null
+wobble_height = null
+wobble_speed = null
+
+[node name="npc2" parent="." instance=ExtResource("5_kdubu")]
+position = Vector2(992, -2)
+walk_speed = null
+walk_time = null
+idle_time = null
+gravity = null
+wobble_rotation = null
+wobble_height = null
+wobble_speed = null
+
+[node name="npc3" parent="." instance=ExtResource("5_kdubu")]
+position = Vector2(1187, -3)
+walk_speed = null
+walk_time = null
+idle_time = null
+gravity = null
+wobble_rotation = null
+wobble_height = null
+wobble_speed = null
