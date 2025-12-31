@@ -2,8 +2,8 @@ extends Node2D
 
 @onready var body: RigidBody2D = $cannon_body
 
-@export var launch_force := 500
-@export var launch_angle_degrees := -10
+@export var launch_force := 1000
+@export var launch_angle_degrees := -5
 
 func _ready() -> void:
 	body.freeze = true

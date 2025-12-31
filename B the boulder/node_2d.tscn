@@ -41,7 +41,7 @@ position = Vector2(475, 517)
 [node name="Background white" type="Sprite2D" parent="."]
 modulate = Color(0.76238704, 0.51456064, 1, 1)
 z_index = -10
-position = Vector2(624, 348)
+position = Vector2(573, 412)
 scale = Vector2(15000, 15000)
 texture = SubResource("CanvasTexture_epypp")
 
@@ -49,7 +49,13 @@ texture = SubResource("CanvasTexture_epypp")
 position = Vector2(312, 563)
 
 [node name="npc3" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(31, 374)
+position = Vector2(-748, 374)
 
 [node name="cannon-test" parent="." instance=ExtResource("4_0hol4")]
 position = Vector2(206, 584)
+
+[node name="test_box2" parent="." instance=ExtResource("3_q6r6c")]
+position = Vector2(214, 517)
+
+[node name="npc4" parent="." instance=ExtResource("5_kdubu")]
+position = Vector2(239, 374)

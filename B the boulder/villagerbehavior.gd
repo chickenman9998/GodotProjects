@@ -13,7 +13,8 @@ var rng = RandomNumberGenerator.new()
 @export var wobble_speed := 30
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var edge_ray: RayCast2D = $RayCast2D
+@onready var edge_ray: RayCast2D = $FloorRaycast
+@onready var wall_ray: RayCast2D = $WallRaycast
 @onready var col: CollisionShape2D = $CollisionShape2D
 
 
@@ -27,10 +28,20 @@ var dead := false
 var knockback: Vector2 = Vector2.ZERO
 var knockback_scale := 2
 
+var npc_type: int = 0
+
 func _ready():
 	rng.randomize()
 	sprite_start_y = sprite.position.y
+	pick_character() # random by default
 	_pick_new_state()
+
+	#pick character
+	rng.randomize()
+	sprite_start_y = sprite.position.y
+	pick_character()
+	_pick_new_state()
+
 
 func _physics_process(delta):
 	if dead:
@@ -65,16 +76,18 @@ func _physics_process(delta):
 		velocity.x = direction * walk_speed if not is_idle else 0
 
 
-	# Edge detection
-	if direction != 0 and edge_ray and not edge_ray.is_colliding():
+	# EDGE detection (correct logic)
+	if direction != 0 and not edge_ray.is_colliding() and not is_idle and knockback.length() <= 1.0:
+		print("turning around (edge)")
 		_turn_around()
-
 	# Timer
 	timer -= delta
 	if timer <= 0:
 		_pick_new_state()
 
 	move_and_slide()
+
+	if direction != 0 and wall_ray.is_colliding() and not is_idle and knockback.length() <= 1.0: _turn_around()
 
 	if Input.is_action_just_pressed("test"):
 		die(100, 1)
@@ -89,13 +102,20 @@ func _pick_new_state():
 		timer = randf_range(walk_time.x, walk_time.y)
 		direction = [-1, 1].pick_random()
 		sprite.flip_h = direction > 0
-		edge_ray.target_position.x = abs(edge_ray.target_position.x) * direction
+
+		wall_ray.target_position.x = abs(wall_ray.target_position.x) * direction
+		edge_ray.position.x = abs(edge_ray.position.x) * direction
 
 func _turn_around():
 	direction *= -1
 	sprite.flip_h = direction > 0
-	edge_ray.target_position.x = abs(edge_ray.target_position.x) * direction
+
+	wall_ray.target_position.x = abs(wall_ray.target_position.x) * direction
+	edge_ray.position.x = abs(edge_ray.position.x) * direction
+
 	timer = randf_range(0.8, 2.0)
+
+
 
 func die(speed: float, npc_type: int) -> void:
 	if dead:
@@ -171,3 +191,17 @@ func apply_knockback_from(body: Node2D) -> void:
 
 		# Ignore collisions with this body during knockback
 		add_collision_exception_with(body)
+
+func pick_character() -> void:
+	var char_selection := "npc_characters"
+	var frame_count := sprite.sprite_frames.get_frame_count(char_selection)
+	if frame_count <= 0:
+		print("no sprite frames")
+		return
+
+	# Pick a random frame
+	npc_type = rng.randi_range(0, frame_count - 1)
+
+	sprite.animation = char_selection
+	sprite.frame = npc_type
+	print(sprite.frame)

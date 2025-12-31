@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cuc53kaeon0is"]
+[gd_scene load_steps=19 format=3 uid="uid://cuc53kaeon0is"]
 
 [ext_resource type="Script" uid="uid://ns4uhqilrbiu" path="res://villagerbehavior.gd" id="1_xxcha"]
 [ext_resource type="Texture2D" uid="uid://bubgdaiskv1do" path="res://sprites/spritesheet.png" id="2_kh24r"]
@@ -35,10 +35,6 @@ region = Rect2(192, 0, 32, 32)
 atlas = ExtResource("2_kh24r")
 region = Rect2(224, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0h7mo"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(256, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_nr8wp"]
 atlas = ExtResource("2_kh24r")
 region = Rect2(288, 0, 32, 32)
@@ -47,25 +43,9 @@ region = Rect2(288, 0, 32, 32)
 atlas = ExtResource("2_kh24r")
 region = Rect2(320, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ta5nu"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flf07"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(384, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k73cj"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(416, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjqkl"]
 atlas = ExtResource("2_kh24r")
 region = Rect2(448, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fs4d3"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(480, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7vxoj"]
 atlas = ExtResource("2_kh24r")
@@ -74,34 +54,6 @@ region = Rect2(512, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ei405"]
 atlas = ExtResource("2_kh24r")
 region = Rect2(544, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e8dv2"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(576, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2nhjh"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(608, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bjha6"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(640, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gt76g"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(672, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1fr6y"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(704, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2hxjc"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(736, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ebxd8"]
-atlas = ExtResource("2_kh24r")
-region = Rect2(768, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6r6c"]
 animations = [{
@@ -131,55 +83,19 @@ animations = [{
 "texture": SubResource("AtlasTexture_x0ka3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0h7mo")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_nr8wp")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d2bti")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ta5nu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flf07")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k73cj")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_rjqkl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fs4d3")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7vxoj")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ei405")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e8dv2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2nhjh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bjha6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gt76g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1fr6y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2hxjc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ebxd8")
 }],
 "loop": false,
 "name": &"npc_characters",
@@ -210,8 +126,9 @@ position = Vector2(1, 5)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("CapsuleShape2D_q6r6c")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, 20)
+[node name="FloorRaycast" type="RayCast2D" parent="."]
+position = Vector2(10, 0)
+target_position = Vector2(0, 22)
 
 [node name="HazardDetector" type="Area2D" parent="."]
 collision_layer = 0
@@ -222,5 +139,8 @@ monitorable = false
 modulate = Color(0.33462557, 0.62527233, 1, 1)
 position = Vector2(1, 5)
 shape = SubResource("CapsuleShape2D_xxcha")
+
+[node name="WallRaycast" type="RayCast2D" parent="."]
+target_position = Vector2(10, 0)
 
 [connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]
