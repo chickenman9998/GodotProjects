@@ -1,5 +1,9 @@
-res://gibs.tscn
-res://npc.tscn
 res://node_2d.tscn
 res://villagerbehavior.gd
+res://npc.tscn
+res://cannon_test.tscn
+res://cannon_test.gd
+res://test_box.tscn
+res://gibs.tscn
 res://gibs.gd
+res://player.tscn

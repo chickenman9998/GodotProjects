@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd7uowk0tiv6j"]
+
+[ext_resource type="Texture2D" uid="uid://dnchycapadqtw" path="res://icon.svg" id="1_juvch"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(128, 128)
+
+[node name="test_box" type="Node2D" groups=["Hazard"]]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." groups=["Hazard"]]
+collision_layer = 25
+mass = 50.0
+gravity_scale = 2.767
+can_sleep = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" groups=["Hazard"]]
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D" groups=["Hazard"]]
+texture = ExtResource("1_juvch")

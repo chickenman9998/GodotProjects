@@ -2,12 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://3dbbewjssa8g" path="res://player.tscn" id="1_epypp"]
 [ext_resource type="Texture2D" uid="uid://dnchycapadqtw" path="res://icon.svg" id="1_wtcfe"]
-[ext_resource type="PackedScene" uid="uid://cd7uowk0tiv6j" path="res://test_box.tscn" id="3_q6r6c"]
 [ext_resource type="PackedScene" uid="uid://ce3icof5qijux" path="res://cannon_test.tscn" id="4_0hol4"]
 [ext_resource type="PackedScene" uid="uid://cuc53kaeon0is" path="res://npc.tscn" id="5_kdubu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wtcfe"]
 size = Vector2(2603.5, 123.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(128, 128)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_epypp"]
 
@@ -35,8 +37,20 @@ position = Vector2(3, 11)
 position = Vector2(496, 30)
 shape = SubResource("RectangleShape2D_wtcfe")
 
-[node name="test_box" parent="." instance=ExtResource("3_q6r6c")]
-position = Vector2(475, 517)
+[node name="box" type="Node2D" parent="."]
+position = Vector2(773, 0)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="box" groups=["Hazard"]]
+collision_layer = 25
+mass = 50.0
+gravity_scale = 2.767
+can_sleep = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="box/RigidBody2D" groups=["Hazard"]]
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="box/RigidBody2D"]
+texture = ExtResource("1_wtcfe")
 
 [node name="Background white" type="Sprite2D" parent="."]
 modulate = Color(0.76238704, 0.51456064, 1, 1)
@@ -45,11 +59,19 @@ position = Vector2(624, 348)
 scale = Vector2(15000, 15000)
 texture = SubResource("CanvasTexture_epypp")
 
+[node name="npc" parent="." instance=ExtResource("5_kdubu")]
+position = Vector2(799, 551)
+
 [node name="npc2" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(312, 563)
+position = Vector2(364, 551)
 
 [node name="npc3" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(31, 374)
+position = Vector2(135, 306)
+
+[node name="npc4" parent="." instance=ExtResource("5_kdubu")]
+position = Vector2(365, 449)
 
 [node name="cannon-test" parent="." instance=ExtResource("4_0hol4")]
-position = Vector2(206, 584)
+position = Vector2(276, 562)
+launch_force = null
+launch_angle_degrees = null
