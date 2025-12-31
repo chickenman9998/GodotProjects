@@ -3,15 +3,15 @@ extends RigidBody2D
 @export var lifetime := 15      # seconds before gib disappears
 @export var spawn_impulse := 400 ## to give characters an explosion effect add mask layer 6 to boulder (will add explosi
 ## insanely high impulse, but being crushed by boulder, therefore gibs wont go too far. compare to T kill function
-@export var torque_impulse := 200  # optional spin
+@export var torque_impulse := 300  # optional spin
 
-@onready var particles: CPUParticles2D = $CPUParticles2D  # child node, exact name
+@onready var particles: CPUParticles2D = $InitialBloodSplatter  # child node, exact name
+@onready var particleslinger: CPUParticles2D = $LingeringBlood
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D  # fade this instead of scaling
 
 func _ready():
 	# Random rotation
 	rotation_degrees = randf_range(0, 360)
-
 	# Randomize particle lifetime per instance
 	if particles:
 		var mat = particles.material
@@ -21,7 +21,7 @@ func _ready():
 		particles.emitting = true
 	else:
 		push_error("CPUParticles2D not found!")
-
+	particleslinger.emitting = true
 	# Apply small random movement
 	var dir := Vector2(
 		randf_range(-1.0, 1.0),

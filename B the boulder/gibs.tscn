@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://by2jwg5kf7ru5"]
+[gd_scene load_steps=22 format=3 uid="uid://by2jwg5kf7ru5"]
 
 [ext_resource type="Script" uid="uid://brm1lrs8bpgvk" path="res://gibs.gd" id="1_2k3tp"]
 [ext_resource type="Texture2D" uid="uid://dpt2kvvc236bq" path="res://sprites/gibs/gibs.png" id="1_q34a7"]
@@ -6,57 +6,72 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d21ai"]
 size = Vector2(2, 9)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ynvau"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2k3tp"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(0, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qopd1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynvau"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(4, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qelre"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qopd1"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(8, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ahrv6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qelre"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(12, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5inm1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahrv6"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(16, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_emfq1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5inm1"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(20, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jf6hn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_emfq1"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(24, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6gf5k"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jf6hn"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(28, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_coa1l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gf5k"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(32, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5lrdn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_coa1l"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(36, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_48ef0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lrdn"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(40, 0, 4, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_im6r5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_48ef0"]
 atlas = ExtResource("1_q34a7")
 region = Rect2(44, 0, 4, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_im6r5"]
+atlas = ExtResource("1_q34a7")
+region = Rect2(48, 0, 4, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3umn"]
+atlas = ExtResource("1_q34a7")
+region = Rect2(52, 0, 4, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udras"]
+atlas = ExtResource("1_q34a7")
+region = Rect2(56, 0, 4, 11)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d21ai"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2k3tp")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ynvau")
 }, {
@@ -92,6 +107,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_im6r5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3umn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udras")
 }],
 "loop": false,
 "name": &"gib_bits",
@@ -125,19 +146,40 @@ shape = SubResource("RectangleShape2D_d21ai")
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_d21ai")
 animation = &"gib_bits"
-frame = 2
-frame_progress = 0.3573497
+frame_progress = 1.0
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="RigidBody2D"]
+[node name="InitialBloodSplatter" type="CPUParticles2D" parent="RigidBody2D"]
 rotation = 1.5707964
 emitting = false
-amount = 150
+amount = 75
 texture = SubResource("CanvasTexture_2k3tp")
-lifetime = 20.0
+lifetime = 10.0
 one_shot = true
 speed_scale = 0.7
-explosiveness = 0.8
+explosiveness = 0.9
 randomness = 0.5
+lifetime_randomness = 0.5
+fract_delta = false
+emission_shape = 2
+emission_sphere_radius = 3.32
+direction = Vector2(0, 0)
+spread = 180.0
+initial_velocity_min = 23.58
+initial_velocity_max = 108.27
+scale_amount_min = 2.1
+scale_amount_max = 2.1
+color = Color(0.8819907, 2.7193873e-06, 4.813075e-07, 1)
+color_initial_ramp = SubResource("Gradient_ynvau")
+
+[node name="LingeringBlood" type="CPUParticles2D" parent="RigidBody2D"]
+rotation = 1.5707964
+emitting = false
+amount = 100
+texture = SubResource("CanvasTexture_2k3tp")
+lifetime = 15.0
+one_shot = true
+explosiveness = 0.1
+randomness = 0.75
 lifetime_randomness = 0.5
 fract_delta = false
 emission_shape = 2

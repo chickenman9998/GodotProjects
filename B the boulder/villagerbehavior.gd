@@ -3,10 +3,10 @@ class_name NPC
 
 var rng = RandomNumberGenerator.new()
 
-@export var walk_speed := 40.0
+@export var walk_speed := 40
 @export var walk_time := Vector2(1.5, 4.0)
 @export var idle_time := Vector2(0.5, 2.0)
-@export var gravity := 800.0
+@export var gravity := 800
 
 @export var wobble_rotation := 5
 @export var wobble_height := 1
@@ -119,7 +119,7 @@ func _on_hazard_detector_body_entered(body: Node2D) -> void:
 		var speed := 0
 		if body is RigidBody2D:
 			speed = int(body.linear_velocity.length()) / 10
-		if speed > 35:
+		if speed > 20:
 			print(speed)
 			die()
 		else:
