@@ -17,6 +17,7 @@ var rng = RandomNumberGenerator.new()
 @onready var wall_ray: RayCast2D = $WallRaycast
 @onready var col: CollisionShape2D = $CollisionShape2D
 
+var npc_type: int = 0
 
 var direction := 0
 var timer := 0.0
@@ -28,19 +29,13 @@ var dead := false
 var knockback: Vector2 = Vector2.ZERO
 var knockback_scale := 2
 
-var npc_type: int = 0
-
 func _ready():
-	rng.randomize()
-	sprite_start_y = sprite.position.y
-	pick_character() # random by default
-	_pick_new_state()
-
 	#pick character
 	rng.randomize()
 	sprite_start_y = sprite.position.y
 	pick_character()
 	_pick_new_state()
+	$HazardDetector.monitoring = true
 
 
 func _physics_process(delta):
@@ -75,6 +70,8 @@ func _physics_process(delta):
 
 		velocity.x = direction * walk_speed if not is_idle else 0
 
+	floor_snap_length = 5
+	move_and_slide()
 
 	# EDGE detection (correct logic)
 	if direction != 0 and not edge_ray.is_colliding() and not is_idle and knockback.length() <= 1.0:
@@ -84,13 +81,13 @@ func _physics_process(delta):
 	timer -= delta
 	if timer <= 0:
 		_pick_new_state()
-
-	move_and_slide()
-
+	
 	if direction != 0 and wall_ray.is_colliding() and not is_idle and knockback.length() <= 1.0: _turn_around()
+	
+
 
 	if Input.is_action_just_pressed("test"):
-		die(100, 1)
+		die(100, npc_type)
 
 func _pick_new_state():
 	is_idle = randf() < 0.4
@@ -113,6 +110,14 @@ func _turn_around():
 	wall_ray.target_position.x = abs(wall_ray.target_position.x) * direction
 	edge_ray.position.x = abs(edge_ray.position.x) * direction
 
+	# allow raycast to update after flipping
+	await get_tree().process_frame
+
+	# if the new direction is ALSO blocked → squished
+	if wall_ray.is_colliding():
+		die(1, npc_type)
+		return
+
 	timer = randf_range(0.8, 2.0)
 
 
@@ -120,17 +125,19 @@ func _turn_around():
 func die(speed: float, npc_type: int) -> void:
 	if dead:
 		return
+		
 	dead = true
+	$HazardDetector.monitoring = false
 
-	var gibs_scene: PackedScene = preload("res://Gibs.tscn")
+	var gibs_scene: PackedScene = preload("res://gibs.tscn")
 
 	# Preload one gib to inspect its sprite frame count
 	var temp_gib: Node2D = gibs_scene.instantiate()
 	var rigid_temp: RigidBody2D = temp_gib.get_node("RigidBody2D")
 	var gib_sprite_temp: AnimatedSprite2D = rigid_temp.get_node_or_null("AnimatedSprite2D")
 
-	var frame_count := gib_sprite_temp.sprite_frames.get_frame_count("gib_bits") if gib_sprite_temp else 0
-
+	var frame_count := gib_sprite_temp.sprite_frames.get_frame_count(str(npc_type)) if gib_sprite_temp else 0
+	#print(str(npc_type))
 	# Shuffle frame order
 	var frames: Array = []
 	for f in frame_count:
@@ -153,44 +160,82 @@ func die(speed: float, npc_type: int) -> void:
 		if rigid:
 			var gib_sprite: AnimatedSprite2D = rigid.get_node_or_null("AnimatedSprite2D")
 			if gib_sprite and frame_count > 0:
+				gib_sprite.animation = str(npc_type)
 				gib_sprite.frame = frames[i % frame_count]
-
-		# (placeholder) use npc_type later to pick different gib sets
-		# match npc_type:
-		#     0: gib_sprite.play("gib_bits")
-		#     1: gib_sprite.play("gib_zombie")
-		#     etc...
-
+				
 		get_tree().current_scene.call_deferred("add_child", gibs)
 
 	# Remove the NPC
 	queue_free()
-
-
 func _on_hazard_detector_body_entered(body: Node2D) -> void:
-	print(body)
 	if body is RigidBody2D:
-		var speed := 0
-		speed = int(body.linear_velocity.length()) / 10
-		if body.is_in_group("Hazard") and speed > 30:
-			if body.name == "boulder": #boulder has double gib speed - looks better
-				print("boulder death: ", speed)
-				die(speed * 2, 1)
-			else: 
-				print("death: ", speed)
-				die(speed, 1)
-		else:
-			print("push: ", speed)
+		#linear + rotational speed
+		var speed = int(body.linear_velocity.length()) / 10
+		var rot_speed = int(abs(body.angular_velocity)) * 10
+		var total_motion = speed + rot_speed
+		var standing_on := edge_ray.get_collider()
+
+		var slide_collision = get_last_slide_collision()
+
+		# Directional hit detection (original)
+		var hit_from_above := slide_collision and slide_collision.get_normal().y > 0.7
+		var hit_from_below := slide_collision and slide_collision.get_normal().y < -0.7
+		var hit_from_side = slide_collision and abs(slide_collision.get_normal().x) > 0.7
+
+		# -------------------------------
+		# NEW: fallback when slide_collision is null
+		# -------------------------------
+		if slide_collision == null:
+			hit_from_above = body.global_position.y < global_position.y - 4
+			hit_from_below = body.global_position.y > global_position.y + 4
+			hit_from_side = abs(body.global_position.x - global_position.x) < 6
+		# -------------------------------
+
+		if standing_on == body:
+			print("BUMPED Upwards")
 			apply_knockback_from(body)
+			return
+
+		# Boulder special case
+		elif body.name == "boulder" and total_motion > 90:
+			print("RUN OVER by boulder: ", total_motion)
+			die(total_motion, npc_type)
+			return
+
+		# CRUSH CHECK — now uses hit_from_above
+		elif standing_on != null and hit_from_above:
+			print("CRUSHED by falling object")
+			die(total_motion * 0.5, npc_type)
+			return
+
+		# High‑velocity hazard — now requires side or below hit
+		elif (body.is_in_group("Hazard") and (speed > 90 or rot_speed > 30)) and body.name != "boulder" and (hit_from_side or hit_from_below):
+			print("KILLED by high velocity object:", total_motion)
+			die(speed, npc_type)
+			return
 			
+		elif hit_from_side:
+			print("KNOCKBACK:", total_motion)
+			apply_knockback_from(body)
+			return
+
+		else:
+			print("KNOCKBACK (fallback):", total_motion)
+			apply_knockback_from(body)
+			return
+
+
 
 func apply_knockback_from(body: Node2D) -> void:
-		# Use the rigid body's actual velocity
-		knockback = body.linear_velocity * knockback_scale
-		#print(body, "knockback: (", snapped(knockback.x, 0.01), ", ", snapped(knockback.y, 0.01), ")")
+	# Use the rigid body's actual velocity
+	knockback = body.linear_velocity * knockback_scale
 
-		# Ignore collisions with this body during knockback
-		add_collision_exception_with(body)
+	# Prevent downward tunneling through thin floors
+	if knockback.y > 0 and is_on_floor():
+		knockback.y = 0
+
+	# Ignore collisions with this body during knockback
+	add_collision_exception_with(body)
 
 func pick_character() -> void:
 	var char_selection := "npc_characters"
@@ -198,10 +243,8 @@ func pick_character() -> void:
 	if frame_count <= 0:
 		print("no sprite frames")
 		return
-
 	# Pick a random frame
-	npc_type = rng.randi_range(0, frame_count - 1)
-
+	#npc_type = rng.randi_range(0, frame_count - 1)
+	npc_type = rng.randi_range(0, 2)
 	sprite.animation = char_selection
 	sprite.frame = npc_type
-	print(sprite.frame)

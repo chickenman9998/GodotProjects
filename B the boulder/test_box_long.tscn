@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dycutvncys6bf"]
+
+[ext_resource type="PackedScene" uid="uid://cd7uowk0tiv6j" path="res://test_box.tscn" id="1_6tiyg"]
+
+[node name="test_box" instance=ExtResource("1_6tiyg")]
+
+[node name="RigidBody2D" parent="." index="0"]
+mass = 5.0
+
+[node name="CollisionShape2D" parent="RigidBody2D" index="0"]
+scale = Vector2(4, 0.1)
+
+[node name="Sprite2D" parent="RigidBody2D" index="1"]
+scale = Vector2(4, 0.1)

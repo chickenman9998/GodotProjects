@@ -28,12 +28,13 @@ texture = ExtResource("2_hqtel")
 
 [node name="GroundRay" type="RayCast2D" parent="boulder"]
 visible = false
-target_position = Vector2(0, 40)
+target_position = Vector2(0, 60)
 hit_from_inside = true
 script = ExtResource("3_sweqy")
 
 [node name="Line2D" type="Line2D" parent="boulder/GroundRay"]
-points = PackedVector2Array(0, 0, 0, 40)
+visible = false
+points = PackedVector2Array(0, 0, 0, 60)
 width = 4.0
 
 [node name="Camera2D" type="Camera2D" parent="boulder"]
@@ -47,13 +48,15 @@ limit_right = 0
 limit_bottom = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 drag_vertical_offset = -0.5
 drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 script = ExtResource("4_hqtel")
-follow_speed = 10
+follow_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boulder" groups=["Hazard"]]
 scale = Vector2(0.75, 0.75)

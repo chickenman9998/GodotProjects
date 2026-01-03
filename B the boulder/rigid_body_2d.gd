@@ -24,6 +24,5 @@ func _physics_process(_delta):
 	# Jump
 	if Input.is_action_just_pressed("jump") and ground_ray != null and ground_ray.is_colliding():
 		apply_impulse(Vector2(0, -jump_impulse*1000))
-		print("Jumped!")
-	elif Input.is_action_just_pressed("jump"):
-		print("Cannot jump. Grounded =", ground_ray != null and ground_ray.is_colliding())
+	#elif Input.is_action_just_pressed("jump"):
+		#print("Cannot jump. Grounded =", ground_ray != null and ground_ray.is_colliding())

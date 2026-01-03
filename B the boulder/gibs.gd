@@ -37,7 +37,7 @@ func _ready():
 		randf_range(-1.0, -0.2)
 	).normalized()
 
-	print(spawn_impulse)
+	#print(spawn_impulse)
 	apply_impulse(dir * spawn_impulse)
 
 	# Apply a little spin

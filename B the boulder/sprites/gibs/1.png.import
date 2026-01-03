@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpt2kvvc236bq"
-path="res://.godot/imported/gibs.png-85d431dfd57dc9e02f5e4da513aa604e.ctex"
+uid="uid://cwwi843t4rifd"
+path="res://.godot/imported/1.png-28e6d32924244fe19536632edbb38c70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/gibs/gibs.png"
-dest_files=["res://.godot/imported/gibs.png-85d431dfd57dc9e02f5e4da513aa604e.ctex"]
+source_file="res://sprites/gibs/1.png"
+dest_files=["res://.godot/imported/1.png-28e6d32924244fe19536632edbb38c70.ctex"]
 
 [params]
 

@@ -9,12 +9,15 @@ size = Vector2(128, 128)
 
 [node name="RigidBody2D" type="RigidBody2D" parent="." groups=["Hazard"]]
 collision_layer = 25
-mass = 50.0
-gravity_scale = 2.767
+collision_mask = 19
+mass = 10.0
+gravity_scale = 2.0
 can_sleep = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" groups=["Hazard"]]
+scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_0e48y")
 
 [node name="Sprite2D" type="Sprite2D" parent="RigidBody2D" groups=["Hazard"]]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_juvch")

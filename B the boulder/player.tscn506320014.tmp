@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://3dbbewjssa8g"]
+[gd_scene load_steps=5 format=3 uid="uid://3dbbewjssa8g"]
 
 [ext_resource type="Script" uid="uid://b4dmovxteb8au" path="res://rigid_body_2d.gd" id="1_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://wj2psam7rtfe" path="res://sprites/gearpixel.png" id="2_hqtel"]
 [ext_resource type="Script" uid="uid://do1veyyfhtmw" path="res://ray_cast_2d.gd" id="3_sweqy"]
-[ext_resource type="Script" uid="uid://etkabahotx7d" path="res://camera_2d.gd" id="4_hqtel"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q6r6c"]
 radius = 44.102154
@@ -12,49 +11,37 @@ radius = 44.102154
 
 [node name="boulder" type="RigidBody2D" parent="." groups=["Hazard"]]
 collision_layer = 10
-collision_mask = 17
 input_pickable = true
 mass = 10.0
 gravity_scale = 2.0
 can_sleep = false
 script = ExtResource("1_i3pqv")
-torque_force = 15
-jump_impulse = 8
+torque_force = 25
+jump_impulse = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="boulder"]
 texture_filter = 1
-scale = Vector2(0.075, 0.075)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_hqtel")
 
 [node name="GroundRay" type="RayCast2D" parent="boulder"]
 visible = false
-target_position = Vector2(0, 40)
+target_position = Vector2(0, 60)
 hit_from_inside = true
 script = ExtResource("3_sweqy")
 
 [node name="Line2D" type="Line2D" parent="boulder/GroundRay"]
-points = PackedVector2Array(0, 0, 0, 40)
+visible = false
+points = PackedVector2Array(0, 0, 0, 60)
 width = 4.0
 
 [node name="Camera2D" type="Camera2D" parent="boulder"]
 physics_interpolation_mode = 2
-scale = Vector2(1.5, 1.5)
 zoom = Vector2(2, 2)
-limit_enabled = false
-limit_left = 0
-limit_top = 0
-limit_right = 0
-limit_bottom = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+drag_horizontal_offset = 1.0
 drag_vertical_offset = -0.5
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
-script = ExtResource("4_hqtel")
-follow_speed = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boulder" groups=["Hazard"]]
-scale = Vector2(0.75, 0.75)
 shape = SubResource("CircleShape2D_q6r6c")

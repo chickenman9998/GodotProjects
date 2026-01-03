@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdckahlerngrh"]
+[gd_scene load_steps=10 format=3 uid="uid://bdckahlerngrh"]
 
 [ext_resource type="PackedScene" uid="uid://3dbbewjssa8g" path="res://player.tscn" id="1_epypp"]
 [ext_resource type="Texture2D" uid="uid://dnchycapadqtw" path="res://icon.svg" id="1_wtcfe"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://ce3icof5qijux" path="res://cannon_test.tscn" id="4_0hol4"]
 [ext_resource type="PackedScene" uid="uid://cuc53kaeon0is" path="res://npc.tscn" id="5_kdubu"]
 [ext_resource type="PackedScene" uid="uid://dycutvncys6bf" path="res://test_box_long.tscn" id="6_kdubu"]
-[ext_resource type="PackedScene" uid="uid://mpw1prbvijqb" path="res://test_box_light_pushable.tscn" id="7_d21ai"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wtcfe"]
 size = Vector2(2603.5, 123.5)
@@ -19,7 +18,7 @@ diffuse_texture = SubResource("PlaceholderTexture2D_epypp")
 [node name="test_world" type="Node2D"]
 
 [node name="boulder-character" parent="." instance=ExtResource("1_epypp")]
-position = Vector2(-148, 516)
+position = Vector2(-816, 533)
 
 [node name="floor" type="Node2D" parent="."]
 position = Vector2(-465, 611)
@@ -27,7 +26,7 @@ position = Vector2(-465, 611)
 [node name="Sprite2D" type="Sprite2D" parent="floor"]
 z_index = 10
 position = Vector2(547.00006, 41)
-scale = Vector2(21, 0.955)
+scale = Vector2(19.585, 0.955)
 texture = ExtResource("1_wtcfe")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="floor"]
@@ -77,35 +76,3 @@ position = Vector2(-639, 538)
 [node name="test_box3" parent="." instance=ExtResource("6_kdubu")]
 position = Vector2(-304.99997, 324)
 rotation = 1.4093293
-
-[node name="floor2" type="Node2D" parent="."]
-position = Vector2(-1262, 611)
-rotation = 1.5707964
-
-[node name="Sprite2D" type="Sprite2D" parent="floor2"]
-z_index = 10
-position = Vector2(547.00006, 41)
-scale = Vector2(21, 0.955)
-texture = ExtResource("1_wtcfe")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="floor2"]
-position = Vector2(3, 11)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="floor2/StaticBody2D"]
-position = Vector2(496, 30)
-shape = SubResource("RectangleShape2D_wtcfe")
-
-[node name="npc9" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(-1151, 538)
-
-[node name="test_box_light_pushable" parent="." instance=ExtResource("7_d21ai")]
-position = Vector2(-1069, 539)
-
-[node name="test_box4" parent="." instance=ExtResource("3_q6r6c")]
-position = Vector2(-1208, 508)
-
-[node name="npc10" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(-148, 409)
-
-[node name="npc11" parent="." instance=ExtResource("5_kdubu")]
-position = Vector2(164, 528)
